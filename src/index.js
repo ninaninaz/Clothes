@@ -7,6 +7,10 @@ const PORT = process.env.PORT || 5001
 
 connectDB()
 
+app.use(express.json())
+
+app.use("/api/clothes", require("./routes/clothingRoutes"))
+
 app.listen(PORT, () =>{
     console.log("Server listening on port: " + PORT)
 })
