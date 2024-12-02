@@ -9,17 +9,19 @@ const createClothing = async (req, res) => {
         res.status(201).json(clothing)
     } catch (error) {
         console.error(error.message)
-        res.status(500).send("Internal Server Error")
+        res.status(500).send("Internal server error")
     }
 }
 
 const getAllClothes = async (req, res) => {
     try {
         const clothes = await Clothing.find()
+        if (clothes.length === 0)
+            return res.status(404).json({ message: "No clothes found" })
         res.status(200).json(clothes)
     } catch (error) {
         console.error(error.message)
-        res.status(500).send("Internal Server Error")
+        res.status(500).send("Internal server error")
     }
 }
 
@@ -39,8 +41,24 @@ const updateClothing = async (req, res)  => {
         res.status(200).json(updatedClothing)
     } catch (error) {
         console.error(error.message)
-        res.status(500).send("Internal Server Error")
+        res.status(500).send("Internal server Error")
     }
 }
 
-module.exports = { createClothing, getAllClothes, updateClothing }
+const deleteClothing = async (req, res) => {
+    const clothing_id = req.params.clothing_id
+
+    try {
+        const deletedClothing = await Clothing.findByIdAndDelete(clothing_id)
+        if (!deletedClothing) {
+            return res.status(404).json({ message: "Clothing is not found"})
+        }
+        res.status(200).json(deletedClothing)
+    } catch (error) {
+        console.error(error.message)
+        res.status(500).send("Internal server error")
+    }
+
+}
+
+module.exports = { createClothing, getAllClothes, updateClothing, deleteClothing}
