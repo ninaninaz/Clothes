@@ -36,7 +36,7 @@ const updateClothing = async (req, res)  => {
             { new: true }
         )
         if (!updateClothing) {
-            return res.status(404).json({ message: "Clothing not found" })
+            return res.status(404).json({ message: "Clothing is not found" })
         }
         res.status(200).json(updatedClothing)
     } catch (error) {
@@ -53,7 +53,7 @@ const deleteClothing = async (req, res) => {
         if (!deletedClothing) {
             return res.status(404).json({ message: "Clothing is not found"})
         }
-        res.status(200).json(deletedClothing)
+        res.status(200).json( {message: "Clothing has succesfully been deleted from database"})
     } catch (error) {
         console.error(error.message)
         res.status(500).send("Internal server error")
@@ -61,4 +61,4 @@ const deleteClothing = async (req, res) => {
 
 }
 
-module.exports = { createClothing, getAllClothes, updateClothing, deleteClothing}
+module.exports = { createClothing, getAllClothes, updateClothing, deleteClothing }
